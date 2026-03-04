@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ChangeMaker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">special-computing-workshop</a> &gt; <a href="index.source.html" class="el_package">ru.spbu.apcyb.svp.tasks</a> &gt; <span class="el_source">ChangeMaker.java</span></div><h1>ChangeMaker.java</h1><pre class="source lang-java linenums">package ru.spbu.apcyb.svp.tasks;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
+/**
+ * Provides functionality to find all unique combinations of banknotes
+ * for making a given amount (order of banknotes does not matter).
+ */
+<span class="fc" id="L12">public final class ChangeMaker {</span>
+
+  /**
+   * Returns all unique combinations of the provided denominations that sum to {@code amount}.
+   * Each denomination can be used unlimited number of times.
+   *
+   * @param amount        the target amount (must be non-negative)
+   * @param denominations list of available banknote denominations
+   * @return list of combinations; each combination is a list of banknotes
+   */
+  public List&lt;List&lt;Integer&gt;&gt; findAllCombinations(int amount, List&lt;Integer&gt; denominations) {
+<span class="fc bfc" id="L23" title="All 2 branches covered.">    if (amount &lt; 0) {</span>
+<span class="fc" id="L24">      throw new IllegalArgumentException(&quot;Amount must be non-negative&quot;);</span>
+    }
+<span class="pc bpc" id="L26" title="2 of 4 branches missed.">    if (denominations == null || denominations.isEmpty()) {</span>
+<span class="nc" id="L27">      return List.of();</span>
+    }
+
+<span class="fc" id="L30">    List&lt;Integer&gt; denoms = normalizeDenominations(denominations);</span>
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">    if (denoms.isEmpty()) {</span>
+<span class="nc" id="L32">      return List.of();</span>
+    }
+
+<span class="fc" id="L35">    List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L36">    backtrack(amount, denoms, 0, new ArrayList&lt;&gt;(), result);</span>
+<span class="fc" id="L37">    return result;</span>
+  }
+
+  private List&lt;Integer&gt; normalizeDenominations(List&lt;Integer&gt; denominations) {
+<span class="fc" id="L41">    return denominations.stream()</span>
+<span class="fc" id="L42">        .filter(Objects::nonNull)</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        .filter(d -&gt; d &gt; 0)</span>
+<span class="fc" id="L44">        .distinct()</span>
+<span class="fc" id="L45">        .sorted(Collections.reverseOrder())</span>
+<span class="fc" id="L46">        .toList();</span>
+  }
+
+  private void backtrack(int remaining,
+                         List&lt;Integer&gt; denoms,
+                         int index,
+                         List&lt;Integer&gt; current,
+                         List&lt;List&lt;Integer&gt;&gt; result) {
+<span class="fc bfc" id="L54" title="All 2 branches covered.">    if (remaining == 0) {</span>
+<span class="fc" id="L55">      result.add(new ArrayList&lt;&gt;(current));</span>
+<span class="fc" id="L56">      return;</span>
+    }
+<span class="pc bpc" id="L58" title="1 of 4 branches missed.">    if (index &gt;= denoms.size() || remaining &lt; 0) {</span>
+<span class="fc" id="L59">      return;</span>
+    }
+
+<span class="fc" id="L62">    int denom = denoms.get(index);</span>
+<span class="fc" id="L63">    int maxCount = remaining / denom;</span>
+
+<span class="fc bfc" id="L65" title="All 2 branches covered.">    for (int k = maxCount; k &gt;= 0; k--) {</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">      for (int i = 0; i &lt; k; i++) {</span>
+<span class="fc" id="L67">        current.add(denom);</span>
+      }
+
+<span class="fc" id="L70">      backtrack(remaining - k * denom, denoms, index + 1, current, result);</span>
+
+<span class="fc bfc" id="L72" title="All 2 branches covered.">      for (int i = 0; i &lt; k; i++) {</span>
+<span class="fc" id="L73">        current.remove(current.size() - 1);</span>
+      }
+    }
+<span class="fc" id="L76">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

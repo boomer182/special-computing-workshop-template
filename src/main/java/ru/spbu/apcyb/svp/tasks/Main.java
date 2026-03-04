@@ -7,48 +7,64 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+/**
+ * Console entry point for the "ATM" task.
+ * Reads amount and denominations from stdin and prints all unique combinations.
+ */
 public final class Main {
 
-    public static void main(String[] args) throws IOException {
-        List<Integer> input = readAllInts();
-        if (input.isEmpty()) {
-            return;
-        }
-
-        int amount = input.get(0);
-        List<Integer> denoms = input.subList(1, input.size());
-
-        ChangeMaker changeMaker = new ChangeMaker();
-        List<List<Integer>> combos = changeMaker.findAllCombinations(amount, denoms);
-
-        System.out.println(combos.size());
-        for (List<Integer> combo : combos) {
-            System.out.println(joinWithSpaces(combo));
-        }
+  /**
+   * Program entry point.
+   *
+   * @param args command line arguments (not used)
+   * @throws IOException if an input error occurs
+   */
+  public static void main(String[] args) throws IOException {
+    List<Integer> input = readAllInts();
+    if (input.isEmpty()) {
+      return;
     }
 
-    private static List<Integer> readAllInts() throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        List<Integer> res = new ArrayList<>();
+    int amount = input.get(0);
+    List<Integer> denoms = input.subList(1, input.size());
 
-        String line;
-        while ((line = br.readLine()) != null) {
-            if (line.isBlank()) continue;
-            StringTokenizer st = new StringTokenizer(line);
-            while (st.hasMoreTokens()) {
-                res.add(Integer.parseInt(st.nextToken()));
-            }
-        }
-        return res;
-    }
+    ChangeMaker changeMaker = new ChangeMaker();
+    List<List<Integer>> combos = changeMaker.findAllCombinations(amount, denoms);
 
-    private static String joinWithSpaces(List<Integer> values) {
-        if (values.isEmpty()) return "";
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < values.size(); i++) {
-            if (i > 0) sb.append(' ');
-            sb.append(values.get(i));
-        }
-        return sb.toString();
+    System.out.println(combos.size());
+    for (List<Integer> combo : combos) {
+      System.out.println(joinWithSpaces(combo));
     }
+  }
+
+  private static List<Integer> readAllInts() throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    List<Integer> res = new ArrayList<>();
+
+    String line;
+    while ((line = br.readLine()) != null) {
+      if (line.isBlank()) {
+        continue;
+      }
+      StringTokenizer st = new StringTokenizer(line);
+      while (st.hasMoreTokens()) {
+        res.add(Integer.parseInt(st.nextToken()));
+      }
+    }
+    return res;
+  }
+
+  private static String joinWithSpaces(List<Integer> values) {
+    if (values.isEmpty()) {
+      return "";
+    }
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < values.size(); i++) {
+      if (i > 0) {
+        sb.append(' ');
+      }
+      sb.append(values.get(i));
+    }
+    return sb.toString();
+  }
 }
