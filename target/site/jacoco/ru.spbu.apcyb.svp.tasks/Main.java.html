@@ -20,52 +20,52 @@ import java.util.StringTokenizer;
    * @throws IOException if an input error occurs
    */
   public static void main(String[] args) throws IOException {
-<span class="nc" id="L23">    List&lt;Integer&gt; input = readAllInts();</span>
-<span class="nc bnc" id="L24" title="All 2 branches missed.">    if (input.isEmpty()) {</span>
-<span class="nc" id="L25">      return;</span>
+<span class="fc" id="L23">    List&lt;Integer&gt; input = readAllInts();</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">    if (input.isEmpty()) {</span>
+<span class="fc" id="L25">      return;</span>
     }
 
-<span class="nc" id="L28">    int amount = input.get(0);</span>
-<span class="nc" id="L29">    List&lt;Integer&gt; denoms = input.subList(1, input.size());</span>
+<span class="fc" id="L28">    int amount = input.get(0);</span>
+<span class="fc" id="L29">    List&lt;Integer&gt; denoms = input.subList(1, input.size());</span>
 
-<span class="nc" id="L31">    ChangeMaker changeMaker = new ChangeMaker();</span>
-<span class="nc" id="L32">    List&lt;List&lt;Integer&gt;&gt; combos = changeMaker.findAllCombinations(amount, denoms);</span>
+<span class="fc" id="L31">    ChangeMaker changeMaker = new ChangeMaker();</span>
+<span class="fc" id="L32">    List&lt;List&lt;Integer&gt;&gt; combos = changeMaker.findAllCombinations(amount, denoms);</span>
 
-<span class="nc" id="L34">    System.out.println(combos.size());</span>
-<span class="nc bnc" id="L35" title="All 2 branches missed.">    for (List&lt;Integer&gt; combo : combos) {</span>
-<span class="nc" id="L36">      System.out.println(joinWithSpaces(combo));</span>
-<span class="nc" id="L37">    }</span>
-<span class="nc" id="L38">  }</span>
+<span class="fc" id="L34">    System.out.println(combos.size());</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">    for (List&lt;Integer&gt; combo : combos) {</span>
+<span class="fc" id="L36">      System.out.println(joinWithSpaces(combo));</span>
+<span class="fc" id="L37">    }</span>
+<span class="fc" id="L38">  }</span>
 
   private static List&lt;Integer&gt; readAllInts() throws IOException {
-<span class="nc" id="L41">    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));</span>
-<span class="nc" id="L42">    List&lt;Integer&gt; res = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L41">    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));</span>
+<span class="fc" id="L42">    List&lt;Integer&gt; res = new ArrayList&lt;&gt;();</span>
 
     String line;
-<span class="nc bnc" id="L45" title="All 2 branches missed.">    while ((line = br.readLine()) != null) {</span>
-<span class="nc bnc" id="L46" title="All 2 branches missed.">      if (line.isBlank()) {</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">    while ((line = br.readLine()) != null) {</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">      if (line.isBlank()) {</span>
 <span class="nc" id="L47">        continue;</span>
       }
-<span class="nc" id="L49">      StringTokenizer st = new StringTokenizer(line);</span>
-<span class="nc bnc" id="L50" title="All 2 branches missed.">      while (st.hasMoreTokens()) {</span>
-<span class="nc" id="L51">        res.add(Integer.parseInt(st.nextToken()));</span>
+<span class="fc" id="L49">      StringTokenizer st = new StringTokenizer(line);</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">      while (st.hasMoreTokens()) {</span>
+<span class="fc" id="L51">        res.add(Integer.parseInt(st.nextToken()));</span>
       }
-<span class="nc" id="L53">    }</span>
-<span class="nc" id="L54">    return res;</span>
+<span class="fc" id="L53">    }</span>
+<span class="fc" id="L54">    return res;</span>
   }
 
   private static String joinWithSpaces(List&lt;Integer&gt; values) {
-<span class="nc bnc" id="L58" title="All 2 branches missed.">    if (values.isEmpty()) {</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">    if (values.isEmpty()) {</span>
 <span class="nc" id="L59">      return &quot;&quot;;</span>
     }
-<span class="nc" id="L61">    StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L62" title="All 2 branches missed.">    for (int i = 0; i &lt; values.size(); i++) {</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">      if (i &gt; 0) {</span>
-<span class="nc" id="L64">        sb.append(' ');</span>
+<span class="fc" id="L61">    StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">    for (int i = 0; i &lt; values.size(); i++) {</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">      if (i &gt; 0) {</span>
+<span class="fc" id="L64">        sb.append(' ');</span>
       }
-<span class="nc" id="L66">      sb.append(values.get(i));</span>
+<span class="fc" id="L66">      sb.append(values.get(i));</span>
     }
-<span class="nc" id="L68">    return sb.toString();</span>
+<span class="fc" id="L68">    return sb.toString();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

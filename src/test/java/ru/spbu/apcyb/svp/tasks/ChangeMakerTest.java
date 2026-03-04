@@ -31,6 +31,36 @@ class ChangeMakerTest {
     }
 
     @Test
+    void no_solution_returns_empty_list() {
+        ChangeMaker cm = new ChangeMaker();
+        List<List<Integer>> res = cm.findAllCombinations(3, List.of(2));
+        assertEquals(List.of(), res);
+    }
+
+    @Test
+    void empty_denoms_returns_empty_list() {
+        ChangeMaker cm = new ChangeMaker();
+        List<List<Integer>> res = cm.findAllCombinations(10, List.of());
+        assertEquals(List.of(), res);
+    }
+
+    @Test
+    void null_denoms_returns_empty_list() {
+        ChangeMaker cm = new ChangeMaker();
+        List<List<Integer>> res = cm.findAllCombinations(10, null);
+        assertEquals(List.of(), res);
+    }
+
+    @Test
+    void amount_zero_returns_one_empty_combination() {
+        ChangeMaker cm = new ChangeMaker();
+        List<List<Integer>> res = cm.findAllCombinations(0, List.of(1, 2, 5));
+
+        assertEquals(1, res.size());
+        assertEquals(List.of(), res.get(0));
+    }
+
+    @Test
     void invalid_denoms_are_ignored_and_duplicates_removed() {
         ChangeMaker cm = new ChangeMaker();
         List<List<Integer>> res = cm.findAllCombinations(

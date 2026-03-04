@@ -23,8 +23,8 @@ import java.util.Objects;
 <span class="fc bfc" id="L23" title="All 2 branches covered.">    if (amount &lt; 0) {</span>
 <span class="fc" id="L24">      throw new IllegalArgumentException(&quot;Amount must be non-negative&quot;);</span>
     }
-<span class="pc bpc" id="L26" title="2 of 4 branches missed.">    if (denominations == null || denominations.isEmpty()) {</span>
-<span class="nc" id="L27">      return List.of();</span>
+<span class="fc bfc" id="L26" title="All 4 branches covered.">    if (denominations == null || denominations.isEmpty()) {</span>
+<span class="fc" id="L27">      return List.of();</span>
     }
 
 <span class="fc" id="L30">    List&lt;Integer&gt; denoms = normalizeDenominations(denominations);</span>
