@@ -60,4 +60,25 @@ public class TanCalculatorTest {
 
     assertTrue(maxActive.get() <= 10, "Max active was " + maxActive.get());
   }
+
+  @Test
+  void compute_single_on_empty_returns_empty() {
+    TanCalculator calc = new TanCalculator(10, Math::tan);
+
+    TanComputationResult r = calc.computeSingle(List.of());
+
+    assertEquals(0, r.getCount());
+    assertTrue(r.getValues().isEmpty());
+  }
+
+  @Test
+  void compute_parallel_count_matches_input_size() {
+    TanCalculator calc = new TanCalculator(10, Math::tan);
+    List<Double> input = List.of(0.0, 1.0, -1.0, 2.0);
+
+    TanComputationResult r = calc.computeParallel(input);
+
+    assertEquals(input.size(), r.getCount());
+    assertEquals(input.size(), r.getValues().size());
+  }
 }

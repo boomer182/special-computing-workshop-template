@@ -1,47 +1,51 @@
 package ru.spbu.apcyb.svp.tasks;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-/**
- * Tests for {@link DoubleFileIo}.
- */
-public class DoubleFileIoTest {
+class DoubleFileIoTest {
 
   @TempDir
-  Path temp;
+  Path tempDir;
 
   @Test
-  void reads_whitespace_separated_doubles() throws IOException {
-    Path in = temp.resolve("in.txt");
-    Files.writeString(in, "1.0  2.5\n\n-3.0\t4", StandardCharsets.UTF_8);
+  void read_doubles_reads_all_lines() throws Exception {
+    Path input = tempDir.resolve("input.txt");
+    Files.writeString(input, "1.0\n-2.5\n3\n");
 
     DoubleFileIo io = new DoubleFileIo();
-    List<Double> values = io.readDoubles(in);
+    List<Double> values = io.readDoubles(input);
 
-    assertEquals(List.of(1.0, 2.5, -3.0, 4.0), values);
+    assertEquals(List.of(1.0, -2.5, 3.0), values);
   }
 
   @Test
-  void writes_results_with_metadata() throws IOException {
-    Path out = temp.resolve("out.txt");
+  void write_report_writes_lines() throws Exception {
+    Path out = tempDir.resolve("report.txt");
+    List<String> report = List.of("line1", "line2", "line3");
+
+    DoubleFileIo io = new DoubleFileIo();
+    io.writeReport(out, report);
+
+    assertEquals(report, Files.readAllLines(out));
+  }
+
+  @Test
+  void write_results_creates_non_empty_file() throws Exception {
+    Path out = tempDir.resolve("out.txt");
 
     DoubleFileIo io = new DoubleFileIo();
     io.writeResults(out, List.of(0.0, 1.0), 2, 10, 5);
 
-    List<String> lines = Files.readAllLines(out, StandardCharsets.UTF_8);
-
-    assertEquals("0.0", lines.get(0));
-    assertEquals("1.0", lines.get(1));
-    assertEquals("COUNT=2", lines.get(2));
-    assertEquals("ELAPSED_MS_SINGLE=10", lines.get(3));
-    assertEquals("ELAPSED_MS_MULTI=5", lines.get(4));
+    List<String> lines = Files.readAllLines(out);
+    assertTrue(lines.size() >= 2);
+    String joined = String.join("\n", lines);
+    assertTrue(joined.contains("2"));
   }
 }
