@@ -42,13 +42,14 @@ public final class Main {
     }
 
     if (args.length != 2) {
-      throw new IllegalArgumentException("Expected: <inputFile> <outputFile> OR benchmark <outputReportFile>");
+      throw new IllegalArgumentException(
+          "Expected: <inputFile> <outputFile> OR benchmark <outputReportFile>");
     }
 
     Path input = Path.of(args[0]);
     Path output = Path.of(args[1]);
 
-    DoubleFileIO io = new DoubleFileIO();
+    DoubleFileIo io = new DoubleFileIo();
     List<Double> values = io.readDoubles(input);
 
     TanCalculator calculator = new TanCalculator(MAX_PARALLELISM, Math::tan);
@@ -56,7 +57,13 @@ public final class Main {
     TanComputationResult single = calculator.computeSingle(values);
     TanComputationResult multi = calculator.computeParallel(values);
 
-    io.writeResults(output, multi.getValues(), multi.getCount(), single.getElapsedMillis(), multi.getElapsedMillis());
+    io.writeResults(
+        output,
+        multi.getValues(),
+        multi.getCount(),
+        single.getElapsedMillis(),
+        multi.getElapsedMillis()
+    );
   }
 
   private static void runBenchmark(Path outputReport) throws IOException {
@@ -64,7 +71,7 @@ public final class Main {
     BenchmarkRunner runner = new BenchmarkRunner(calculator);
     List<String> report = runner.run();
 
-    DoubleFileIO io = new DoubleFileIO();
+    DoubleFileIo io = new DoubleFileIo();
     io.writeReport(outputReport, report);
   }
 }

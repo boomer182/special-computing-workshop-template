@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Tests for {@link DoubleFileIO}.
+ * Tests for {@link DoubleFileIo}.
  */
-public class DoubleFileIOTest {
+public class DoubleFileIoTest {
 
   @TempDir
   Path temp;
@@ -23,7 +23,7 @@ public class DoubleFileIOTest {
     Path in = temp.resolve("in.txt");
     Files.writeString(in, "1.0  2.5\n\n-3.0\t4", StandardCharsets.UTF_8);
 
-    DoubleFileIO io = new DoubleFileIO();
+    DoubleFileIo io = new DoubleFileIo();
     List<Double> values = io.readDoubles(in);
 
     assertEquals(List.of(1.0, 2.5, -3.0, 4.0), values);
@@ -33,7 +33,7 @@ public class DoubleFileIOTest {
   void writes_results_with_metadata() throws IOException {
     Path out = temp.resolve("out.txt");
 
-    DoubleFileIO io = new DoubleFileIO();
+    DoubleFileIo io = new DoubleFileIo();
     io.writeResults(out, List.of(0.0, 1.0), 2, 10, 5);
 
     List<String> lines = Files.readAllLines(out, StandardCharsets.UTF_8);

@@ -13,7 +13,7 @@ import java.util.Objects;
 /**
  * Reads/writes doubles from/to files.
  */
-public final class DoubleFileIO {
+public final class DoubleFileIo {
 
   /**
    * Reads doubles from file. Numbers can be separated by whitespace.
