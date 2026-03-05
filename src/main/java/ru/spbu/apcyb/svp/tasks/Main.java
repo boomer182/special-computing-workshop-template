@@ -13,7 +13,7 @@ public final class Main {
   }
 
   /**
-   * Arguments:
+   * Program arguments.
    * <ol>
    *   <li>Path to directory</li>
    *   <li>Path to output file</li>
